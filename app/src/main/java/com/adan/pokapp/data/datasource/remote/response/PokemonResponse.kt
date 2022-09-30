@@ -6,6 +6,6 @@ import com.google.gson.annotations.SerializedName
 
 data class PokemonResponse(
     @SerializedName("id") val idPokemon: Long?,
-    @SerializedName("abilities") val abilities: List<AbilitiesModel>,
-    @SerializedName("moves") val moves: List<MovesModel>
+    @SerializedName("abilities") val abilitiesModel: List<AbilitiesModel>,
+    @SerializedName("moves") val movesModel: List<MovesModel>
 )
