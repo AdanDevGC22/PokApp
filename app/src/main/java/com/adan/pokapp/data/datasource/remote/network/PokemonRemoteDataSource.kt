@@ -5,8 +5,9 @@ import com.adan.pokapp.data.datasource.remote.model.*
 interface PokemonRemoteDataSource {
 
     suspend fun getPokemonsFromApi(): List<PokemonModel>
-    suspend fun getAbilitiesFromApi(id: Long): List<AbilitiesModel>
-    suspend fun getAbilityFromApi(id: Long): List<AbilityEffectModel>
-    suspend fun getMoveFromApi(id: Long): List<MoveEffectModel>
-    suspend fun getImageFromApi(id: Long): SpritesModel
+    suspend fun getAbilitiesFromApi(): List<AbilitiesModel>
+    suspend fun getMovesFromApi(): List<MovesModel>
+    suspend fun getAbilityFromApi(): List<AbilityEffectModel>
+    suspend fun getMoveFromApi(): List<MoveEffectModel>
+  //  suspend fun getImageFromApi(): String
 }

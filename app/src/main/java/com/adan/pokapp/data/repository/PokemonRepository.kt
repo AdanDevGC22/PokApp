@@ -1,13 +1,14 @@
 package com.adan.pokapp.data.repository
 
-import com.adan.pokapp.data.datasource.remote.model.*
 import com.adan.pokapp.domain.model.*
 
 interface PokemonRepository {
 
     suspend fun getAllPokemonsFromRemote(): List<Pokemon>
-    suspend fun getAbilitiesFromRemote(id: Long): List<Abilities>
-    suspend fun getAbilityFromRemote(id: Long): List<AbilityEffect>
-    suspend fun getMoveFromRemote(id: Long): List<MoveEffect>
-    suspend fun getImageFromRemote(id: Long): Sprites
+    suspend fun getAbilitiesFromRemote(): List<Abilities>
+    suspend fun getMovesFromRemote(): List<Moves>
+    suspend fun getAbilityFromRemote(): List<AbilityEffect>
+    suspend fun getMoveFromRemote(): List<MoveEffect>
+    suspend fun getAllPokemonsFromLocal(): List<Pokemon>
+    suspend fun insertAllPokemons(pokemons: List<Pokemon>)
 }

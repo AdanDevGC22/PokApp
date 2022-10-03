@@ -1,5 +1,7 @@
 package com.adan.pokapp.di
 
+import com.adan.pokapp.data.datasource.local.PokemonLocalDataSource
+import com.adan.pokapp.data.datasource.local.PokemonLocalDataSourceImpl
 import com.adan.pokapp.data.datasource.remote.network.PokemonRemoteDataSource
 import com.adan.pokapp.data.datasource.remote.network.PokemonRemoteDataSourceImpl
 import com.adan.pokapp.data.repository.PokemonRepository
@@ -17,6 +19,10 @@ object PokemonModule {
     @Singleton
     @Provides
     fun provideRemoteDataSource(pokemonRemoteDataSourceImpl: PokemonRemoteDataSourceImpl): PokemonRemoteDataSource = pokemonRemoteDataSourceImpl
+
+    @Singleton
+    @Provides
+    fun provideLocalDataSource(pokemonLocalDataSourceImpl: PokemonLocalDataSourceImpl): PokemonLocalDataSource = pokemonLocalDataSourceImpl
 
     @Singleton
     @Provides
