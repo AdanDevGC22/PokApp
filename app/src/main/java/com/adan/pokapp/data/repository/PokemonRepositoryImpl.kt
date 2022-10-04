@@ -1,7 +1,7 @@
 package com.adan.pokapp.data.repository
 
 import com.adan.pokapp.data.datasource.local.PokemonLocalDataSource
-import com.adan.pokapp.data.datasource.local.entity.toListPokemon
+import com.adan.pokapp.data.datasource.local.entity.*
 import com.adan.pokapp.data.datasource.remote.model.*
 import com.adan.pokapp.data.datasource.remote.network.PokemonRemoteDataSource
 import com.adan.pokapp.domain.model.*
@@ -17,35 +17,40 @@ class PokemonRepositoryImpl @Inject constructor(
         return response.toListPokemon()
     }
 
-    override suspend fun getAbilitiesFromRemote(): List<Abilities> {
+    override suspend fun getAllAbilitiesFromRemote(): List<Ability> {
         val response = remoteDataSource.getAbilitiesFromApi()
-        return response.toListAbilities()
+        return response.toListAbility()
     }
 
-    override suspend fun getMovesFromRemote(): List<Moves> {
+    override suspend fun getAllMovesFromRemote(): List<Move> {
         val response = remoteDataSource.getMovesFromApi()
-        return response.toListMoves()
+        return response.toListMove()
     }
-
-    override suspend fun getAbilityFromRemote(): List<AbilityEffect> {
-        val response = remoteDataSource.getAbilityFromApi()
-        return response.toListAbilityEffect()
-    }
-
-    override suspend fun getMoveFromRemote(): List<MoveEffect> {
-        val response = remoteDataSource.getMoveFromApi()
-        return response.toListMoveEffect()
-    }
-
-  /*  override suspend fun getImageFromRemote(): String {
-        return remoteDataSource.getImageFromApi()
-    }*/
 
     override suspend fun getAllPokemonsFromLocal(): List<Pokemon> {
-        return localDataSource.getAllPokemons().toListPokemon()
+        val response = localDataSource.getAllPokemons()
+        return response.toListPokemon()
     }
 
     override suspend fun insertAllPokemons(pokemons: List<Pokemon>) {
         localDataSource.insertAllPokemons(pokemons.toListPokemonEntity())
+    }
+
+    override suspend fun getAllAbilitiesFromLocal(): List<Ability> {
+        val response = localDataSource.getAllAbilities()
+        return response.toListAbility()
+    }
+
+    override suspend fun insertAllAbilities(abilities: List<Ability>) {
+        localDataSource.insertAllAbilities(abilities.toListAbilityEntity())
+    }
+
+    override suspend fun getAllMovesFromLocal(): List<Move> {
+        val response = localDataSource.getAllMoves()
+        return response.toListMove()
+    }
+
+    override suspend fun insertAllMoves(moves: List<Move>) {
+        localDataSource.insertAllMoves(moves.toListMoveEntity())
     }
 }

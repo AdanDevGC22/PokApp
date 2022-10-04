@@ -13,13 +13,22 @@ interface PokemonApi {
     @GET("pokemon/{id}")
     suspend fun getPokemon(@Path("id") id: Long): Response<PokemonResponse>
 
-    @GET("ability/{id}")
+    @GET("ability")
+    suspend fun getAbilities(): Response<AbilityResponse>
+
+    @GET("move")
+    suspend fun getMoves(): Response<MoveResponse>
+
+
+    /*
+     @GET("ability/{id}")
     suspend fun getAbility(@Path("id") id: Long): Response<AbilityEffectResponse>
 
     @GET("move/{id}")
     suspend fun getMove(@Path("id") id: Long): Response<MoveEffectResponse>
 
-    /*@GET("pokemon-form/{id}")
-    suspend fun getPokemonImage(@Path("id") id: Long): Response<FormResponse>*/
+    @GET("pokemon-form/{id}")
+    suspend fun getPokemonImage(@Path("id") id: Long): Response<FormResponse>
+    */
 
 }

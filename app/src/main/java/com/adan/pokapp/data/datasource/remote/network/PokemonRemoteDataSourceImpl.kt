@@ -15,23 +15,38 @@ class PokemonRemoteDataSourceImpl @Inject constructor(private val pokemonApi: Po
         return pokemonApi.getPokemons().let { it.body()!!.result }
     }
 
-    override suspend fun getAbilitiesFromApi(): List<AbilitiesModel> {
-        val hola = pokemonApi.getPokemon(getId()!!.size.toLong()).let { it.body()!!.abilitiesModel }
-        Log.e("Hola", "Aqui esta: $hola")
-        return hola
+    override suspend fun getAbilitiesFromApi(): List<AbilityModel> {
+        return pokemonApi.getAbilities().let { it.body()!!.result }
+    }
+
+    override suspend fun getMovesFromApi(): List<MoveModel> {
+        return pokemonApi.getMoves().let { it.body()!!.result }
+    }
+
+    /*override suspend fun getAbilitiesFromApi(): List<AbilitiesModel> {
+        return pokemonApi.getPokemon(getId()!!.size.toLong()).let { it.body()!!.abilitiesModel }
     }
 
     override suspend fun getMovesFromApi(): List<MovesModel> {
         return pokemonApi.getPokemon(getId()!!.size.toLong()).let { it.body()!!.movesModel }
-    }
+    }*/
 
-    override suspend fun getAbilityFromApi(): List<AbilityEffectModel> {
-        return pokemonApi.getAbility(getId()!!.size.toLong()).let { it.body()!!.abilityEffects }
+  /*  override suspend fun getAbilityFromApi(): List<AbilityEffectModel> {
+        val ability = pokemonApi.getAbility(getId()!!.size.toLong()).let {
+            it.body()!!.abilityEffects
+        }
+        ability.map {
+            it.id = getId()?.size?.toLong()
+            for (i in ability.indices) {
+                it.id = getId()?.get(i)
+            }
+        }
+        return ability
     }
 
     override suspend fun getMoveFromApi(): List<MoveEffectModel> {
         return pokemonApi.getMove(getId()!!.size.toLong()).let { it.body()!!.moveEffects }
-    }
+    }*/
 
     /*override suspend fun getImageFromApi(): String {
         return pokemonApi.getPokemon(getId()!!.size.toLong()).body().let { response ->

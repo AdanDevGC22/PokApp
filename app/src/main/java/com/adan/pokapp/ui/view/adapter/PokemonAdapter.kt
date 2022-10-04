@@ -19,11 +19,13 @@ import com.adan.pokapp.domain.model.Pokemon
 import com.adan.pokapp.domain.model.toPokemonModel
 import com.adan.pokapp.utils.Constants.IMAGE_URL
 
-class PokemonAdapter(private val itemPokemon: ArrayList<Pokemon>) :
+class PokemonAdapter(private val pokemon: PokemonClickListener) :
     RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder>() {
 
     private lateinit var context: Context
-    private lateinit var navController: NavController
+    private lateinit var recyclerView: RecyclerView
+    private var itemPokemon: ArrayList<Pokemon> = ArrayList()
+    private var pokemonPosition = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonAdapter.PokemonViewHolder {
         context = parent.context
@@ -35,21 +37,27 @@ class PokemonAdapter(private val itemPokemon: ArrayList<Pokemon>) :
     }
 
     override fun onBindViewHolder(holder: PokemonAdapter.PokemonViewHolder, position: Int) {
-        holder.bind(itemPokemon[position], context)
-        holder.itemView.setOnClickListener { view ->
-            val result = itemPokemon[position]
-
-            navController = Navigation.findNavController(view)
-            navController.navigate(
-                R.id.pokemonDetailFragment,
-                bundleOf(
-
-                )
-            )
+        val item = itemPokemon[position]
+        item.let {
+            holder.apply {
+                bind(item, context)
+                itemView.tag = item
+            }
         }
+        holder.itemView.setOnClickListener {
+            pokemon.clickOnItem(item, holder.itemView)
+            pokemonPosition = holder.adapterPosition + 1
+            Log.e("Position", "Aqui: $pokemonPosition")
+        }
+
     }
 
     override fun getItemCount(): Int = itemPokemon.size
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        this.recyclerView = recyclerView
+    }
 
     fun submitList(itemList: ArrayList<Pokemon>) {
         this.itemPokemon.clear()
@@ -57,17 +65,16 @@ class PokemonAdapter(private val itemPokemon: ArrayList<Pokemon>) :
         notifyItemInserted(itemPokemon.size - 1)
     }
 
-    fun setImagePokemon(imagePokemon: String): String {
-        return imagePokemon
+    fun getPosition(): Int {
+        Log.e("Position", "Aqui2: $pokemonPosition")
+        return pokemonPosition
     }
 
     inner class PokemonViewHolder(private val binding: ItemPokemonBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(pokemon: Pokemon, context: Context) {
-            Log.e("Hola", "Image ${pokemon.toPokemonModel().getImageUrl()}")
             val imageRequest = ImageRequest.Builder(context)
                 .data(pokemon.toPokemonModel().getImageUrl())
-               // .data(setImagePokemon(""))
                 .crossfade(true)
                 .size(1280, 720)
                 .target(
@@ -87,5 +94,9 @@ class PokemonAdapter(private val itemPokemon: ArrayList<Pokemon>) :
             context.imageLoader.enqueue(imageRequest)
             binding.textViewName.text = pokemon.name
         }
+    }
+
+    interface PokemonClickListener {
+        fun clickOnItem(data: Pokemon, card: View)
     }
 }
